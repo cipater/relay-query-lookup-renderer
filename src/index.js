@@ -198,10 +198,7 @@ class ReactRelayQueryRenderer extends React.Component<Props, State> {
                     if (this._selectionReference) {
                         this._selectionReference.dispose();
                     }
-                    this._rootSubscription = environment.subscribe(
-                        snapshot,
-                        this._onChange,
-                    );
+                    this._rootSubscription = environment.subscribe(snapshot, this._onChange);
                     this._selectionReference = nextReference;
                     // This line should be called only once.
                     hasSyncResult = true;
