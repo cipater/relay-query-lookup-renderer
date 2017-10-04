@@ -116,7 +116,12 @@ class ReactRelayQueryRenderer extends React.Component<Props, State> {
                 variables: operation.variables,
             };
             if (props.lookup && environment.check(operation.root)) {
-                // data is available in the store, render without making any requests
+                // data is available in the store, if props.refetch is present, fetch the query
+                // in the background before rendering the snapshot
+                if (props.refetch) {
+                    this._fetch(operation, props.cacheConfig);
+                }
+
                 const snapshot = environment.lookup(operation.fragment);
                 return {
                     error: null,
@@ -125,9 +130,6 @@ class ReactRelayQueryRenderer extends React.Component<Props, State> {
                         this._fetch(operation, props.cacheConfig);
                     },
                 };
-                if (props.refetch) {
-                    this._fetch(operation, props.cacheConfig);
-                }
             } else {
                 return this._fetch(operation, props.cacheConfig) || getDefaultState();
             }
