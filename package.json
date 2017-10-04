@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "compile": "babel ./src -d ./dist --ignore test.js",
+    "install": "babel ./src -d ./dist --ignore test.js",
     "relay": "relay-compiler --src __test__ --schema __test__/schema.graphql --ignore 'node_modules/**'",
     "test": "jest"
   },
