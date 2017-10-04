@@ -125,6 +125,9 @@ class ReactRelayQueryRenderer extends React.Component<Props, State> {
                         this._fetch(operation, props.cacheConfig);
                     },
                 };
+                if (props.refetch) {
+                    this._fetch(operation, props.cacheConfig);
+                }
             } else {
                 return this._fetch(operation, props.cacheConfig) || getDefaultState();
             }
