@@ -119,7 +119,16 @@ class ReactRelayQueryRenderer extends React.Component<Props, State> {
                 // data is available in the store, if props.refetch is present, fetch the query
                 // in the background before rendering the snapshot
                 if (props.refetch) {
-                    this._fetch(operation, props.cacheConfig);
+                    let refetchOperation = operation;
+                    if (typeof props.refetch == 'object') {
+                        const refetchVariables = props.refetch;
+                        refetchOperation = createOperationSelector(getOperation(query), { ...variables, ...refetchVariables });
+                        this._relayContext = {
+                            environment,
+                            variables: refetchOperation.variables,
+                        };
+                    }
+                    this._fetch(refetchOperation, props.cacheConfig);
                 }
 
                 const snapshot = environment.lookup(operation.fragment);
