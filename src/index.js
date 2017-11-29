@@ -121,7 +121,9 @@ class ReactRelayQueryRenderer extends React.Component<Props, State> {
                 if (props.refetch) {
                     let refetchOperation = operation;
                     if (typeof props.refetch == 'object') {
-                        const refetchVariables = props.refetch;
+                        const refetchVariables = typeof props.refetch == 'function' 
+                                               ? props.refetch() 
+                                               : props.refetch;
                         refetchOperation = createOperationSelector(getOperation(query), { ...variables, ...refetchVariables });
                         this._relayContext = {
                             environment,
